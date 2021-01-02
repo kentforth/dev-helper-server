@@ -7,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     SnippetsModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/devHelper')
+    MongooseModule.forRoot('mongodb://localhost:27017/devHelper', { useFindAndModify: false})
   ],
   controllers: [AppController],
   providers: [AppService],

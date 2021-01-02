@@ -14,6 +14,7 @@ export class Snippet {
 
   @Prop()
   tags: Array<String>
+
 }
 
 export const SnippetSchema = SchemaFactory.createForClass(Snippet)
