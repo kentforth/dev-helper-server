@@ -12,6 +12,7 @@ export class SnippetsController {
   constructor(private readonly snippetsService: SnippetsService) {
   }
 
+
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(@Req() req): Promise<Snippet[]> {
