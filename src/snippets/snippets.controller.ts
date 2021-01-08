@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, Put, Req, Res } from '@nestjs/common';
 import { SnippetsService } from './snippets.service';
 import { Snippet } from './schemas/snippet.schema';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
+import { Query } from 'mongoose';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('snippets')
+@ApiTags('snippets')
 export class SnippetsController {
 
   constructor(private readonly snippetsService: SnippetsService) {
@@ -11,8 +14,8 @@ export class SnippetsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getAll(): Promise<Snippet[]> {
-    const snippets = await this.snippetsService.getAll();
+  async getAll(@Req() req): Promise<Snippet[]> {
+    const snippets = await this.snippetsService.getAll(req.query);
     return snippets;
   }
 
@@ -22,6 +25,20 @@ export class SnippetsController {
     const snippet = await this.snippetsService.getById(id);
     if (!snippet) throw new NotFoundException('Snippet Not found')
     return snippet;
+  }
+
+  @Get('/tag/:name')
+  @HttpCode(HttpStatus.OK)
+  async getAllByTagName(@Param('name') name: string): Promise<Snippet[]> {
+    const snippets = await this.snippetsService.getAllByTagName(name)
+    return snippets;
+  }
+
+  @Get('/title/:title')
+  @HttpCode(HttpStatus.OK)
+  async getAllSnippetsByTitle(@Param('title') title: string): Promise<Snippet[]> {
+    const snippets = await this.snippetsService.getAllSnippetsByTitle(title)
+    return snippets;
   }
 
   @Post()

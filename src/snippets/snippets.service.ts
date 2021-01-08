@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Query } from 'mongoose';
 import { Snippet, SnippetDocument } from './schemas/snippet.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
+import { QueryOptions } from '../config/query-options.config';
+import { exec } from 'child_process';
 
 @Injectable()
 export class SnippetsService {
@@ -11,8 +13,22 @@ export class SnippetsService {
   }
 
   //get all snippets from database
-  async getAll(): Promise<Snippet[]> {
-    return await this.snippetModel.find().exec();
+  async getAll(options: QueryOptions): Promise<Snippet[]> {
+    return await this.snippetModel
+      .find()
+      .skip(Number(options.offset))
+      .limit(Number(options.limit))
+      .exec();
+  }
+
+  //get all snippets by tag name
+  async getAllByTagName(name: string): Promise<Snippet[]> {
+    return this.snippetModel.find({tags: name}).exec()
+  }
+
+  //get all snippets by title
+  async getAllSnippetsByTitle(title: string): Promise<Snippet[]> {
+    return this.snippetModel.find({title: new RegExp(title, 'i')}).exec()
   }
 
   //get a snippet by id from database

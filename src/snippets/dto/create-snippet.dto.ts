@@ -1,7 +1,14 @@
-export class CreateSnippetDto {
-  readonly title: string
-  readonly steps: Array<Object>
-  readonly tags: Array<String>
+import { ApiProperty } from '@nestjs/swagger';
 
+export class CreateSnippetDto {
+
+  @ApiProperty()
+  readonly title: string
+
+  @ApiProperty()
+  readonly steps: Array<Object>
+
+  @ApiProperty()
+  readonly tags: Array<String>
 }
 
