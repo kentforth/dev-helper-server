@@ -15,6 +15,8 @@ export class Snippet {
   @Prop()
   tags: Array<String>
 
+  @Prop()
+  hasImages: boolean
 }
 
 export const SnippetSchema = SchemaFactory.createForClass(Snippet)

@@ -10,5 +10,8 @@ export class CreateSnippetDto {
 
   @ApiProperty()
   readonly tags: Array<String>
+
+  @ApiProperty()
+  readonly hasImages: boolean
 }
 
