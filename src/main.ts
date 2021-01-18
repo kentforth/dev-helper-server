@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule,
     new FastifyAdapter());
   app.enableCors();
-  await app.listen(13050);
+  await app.listen(13000);
 
   const options = new DocumentBuilder()
     .setTitle('Snippets')
