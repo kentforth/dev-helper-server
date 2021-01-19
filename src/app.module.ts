@@ -1,3 +1,5 @@
+import { ConfigModule } from '@nestjs/config';
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -6,8 +8,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     SnippetsModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/devHelper', { useFindAndModify: false})
+    MongooseModule.forRoot(`${process.env.MONGO_URL}`, { useFindAndModify: false, useNewUrlParser: true})
   ],
   controllers: [AppController],
   providers: [AppService],
